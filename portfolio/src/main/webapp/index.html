@@ -2,16 +2,23 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Discover</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
+  <body class="aligncenter" style="background-image: url('images/albumart.jpg'); padding: 50px">
+    <div id="content" style="width: 1300px;">
+      <h1 style="text-align: center" > DISCOVER</h1>
+      <br>
+      <h2 id="main_body" style="background-color:#FFA69E; text-align: center;">
+          Find random album recommendations to listen to!
+          <br>
+          <br>
+          <button onclick="location.href='gallery.html'" type="button">GALLERY</button>
+          <button onclick="location.href='music.html'" type="button">GO</button>
+      </h2>
+
+      
       <div id="greeting-container"></div>
     </div>
   </body>

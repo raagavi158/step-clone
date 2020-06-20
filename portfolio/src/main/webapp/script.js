@@ -22,13 +22,12 @@ function genAlbums() {
     //'Mind the Moon - Milky Chance', 'Oasis - Bad Bunny', 'Section.80 - Kendrick Lamar', 'The Divine Feminine - Mac Miller', 'The Click - AJR', 'YHLQMDLG - Bad Bunny', 'Ego Death - The Internet', 'The Getaway - Red Hot Chilli Peppers', 'Ved-Ritviz'];
     const albumArt = ['2014FHD.png', 'ASTROWORLD.png', 'Blonde.png', 'Currents.png', 'DFAM.png', 'GINGER.png', 'LTG1.png', 'MTM.png', 'Oasis.png', 'Section80.png', 'TDF.png', 'TheClick.png', 'YHLQMDLG.png', 'ED.png', 'TG.png', 'Ved.png']
     var ul = document.getElementById("dynamic-list");
-    ul.innerHTML = "";
+    //ul.innerHTML = "";
     for(var i = 1; i < 5; i++) {
         var imageIndex; 
         do {
             imageIndex = Math.floor(Math.random() * albumNames.length);
         }
-        while(past.has(imageIndex));
         past.add(imageIndex);
         const imgUrl = '/images/' + albumArt[imageIndex];
         const imgElement = document.createElement('img');

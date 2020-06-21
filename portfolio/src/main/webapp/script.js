@@ -25,9 +25,7 @@ function genAlbums() {
     //ul.innerHTML = "";
     for(var i = 1; i < 5; i++) {
         var imageIndex; 
-        do {
-            imageIndex = Math.floor(Math.random() * albumNames.length);
-        }
+        imageIndex = Math.floor(Math.random() * albumNames.length);
         past.add(imageIndex);
         const imgUrl = '/images/' + albumArt[imageIndex];
         const imgElement = document.createElement('img');

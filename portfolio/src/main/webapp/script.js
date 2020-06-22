@@ -41,3 +41,4 @@ function genAlbums() {
         ul.appendChild(listItem);
     }
 }
+

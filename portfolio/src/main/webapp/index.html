@@ -2,17 +2,36 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Discover Music</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
   </head>
-  <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+  <body onload="genAlbums()">
+  <body style="background-color:#3F4045;"> 
+    <div id="content;">
+        <div id="columns" style="float:left; ">
+            <br>
+            <!--<button onclick="genAlbums()">Find Music</button>-->
+            <br>
+            <h1>Which country do you go to college in?</h1>
+            <h2>Vote</h2>
+            <form action="/college-countries" method="POST">
+                <select name="country">
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="India">India</option>
+                    <option value="Germany">Germany</option>
+                    <option value="UAE">UAE</option>
+                    <option value="Australia">Australia</option>
+                </select>
+                <button>Submit</button>
+            </form>
+            <br>
+        </div>
+        <div id="columns" style="float:right;">
+            <div id="chart-container"></div>
+      </div>
     </div>
   </body>
 </html>

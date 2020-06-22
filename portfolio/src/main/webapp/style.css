@@ -1,9 +1,130 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+}
+button {
+    background-color: #ADD8E6; 
+    border: none;
+    border-radius: 10px;
+    color:  #3F4045;
+    padding: 15px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    }
+
+ul {
+    font-family:verdana;
+    font-size: 23px;
+    text-align: left;
+    list-style-position: inside;
+    color: #3F4045;
+    background-color: #E4B1AB;
+    border: 20px #E4B1AB;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#greeting-container {
+#columns {
+    width: 50%;
+    text-align: center;
+}
+
+h1 {
+    color:#E4B1AB; 
+    background-color: #3F4045;
+    border: 40px #3F4045;
+    padding: 30px;
+    border-radius: 10px;
+    font-family:verdana;
+    font-size: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    text-align:center;
+}
+h2 {
+    font-family:verdana; 
+    font-size:30px;
+    color:#3F4045;
+}
+#main_body {
+  border: 40px #fa8072;
+  border-radius: 30px;
+  padding:30px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 700px;
+}
+
+img {
+  border: 10px solid lightblue;
+  border-radius: 5px;
+  padding: 2px;
+  width: 300px;
+}
+
+.image-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: left;
+}
+.image-thumbnails img {
+  margin: 10px;
+  max-height: 300px;
+  max-width: 300px;
+}
+#random-image-container-1 img {
   margin-top: 20px;
+}
+#random-image-container-2 img {
+  margin-top: 20px;
+}
+#random-image-container-3 img {
+  margin-top: 20px;
+}
+#random-image-container-4 img {
+ margin-top: 20px;
+}
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  font-family: Verdana;
+  font-size: 22px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #E4B1AB;
+  color: #3F4045;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 80%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom:-30%;
+  left: 50%;
+  z-index: 1;
+  margin-left: -5px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #E4B1AB transparent transparent transparent;
+}
+
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

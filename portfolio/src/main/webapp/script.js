@@ -15,14 +15,39 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+google.charts.load('current', {packages: ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+  fetch('/college-countries').then(response => response.json())
+  .then((countStudents) => {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Country');
+    data.addColumn('number', 'Number of Students');
+    Object.keys(countStudents).forEach((country) => {
+      data.addRow([country, countStudents[country]]);
+    });
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+    const options = {
+        'title': 'College Countries',
+        'width':630,
+        'height':800,
+        'pieHole': 0.4,
+    };
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+    const chart = new google.visualization.PieChart(
+        document.getElementById('chart-container'));
+    chart.draw(data, options);
+  });
 }
+/*function genAlbums() {
+    fetch('/data').then(response => response.json()).then((albumNames) => {
+    var ul = document.getElementById("dynamic-list");
+    //ul.innerHTML = "";
+    for(var i = 0; i < albumNames.length; i++) {
+        var listItem = document.createElement('li');
+        listItem.textContent = albumNames[i];
+        ul.appendChild(listItem);
+    }
+    });
+}*/
+

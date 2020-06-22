@@ -11,18 +11,23 @@
   <body style="background-color:#3F4045;"> 
     <div id="content;">
         <div id="columns" style="float:left; ">
-            <h1>ALBUMS</h1>
             <br>
             <!--<button onclick="genAlbums()">Find Music</button>-->
             <br>
-            <form action="/data" method="POST">
-                <p style="color:white">Comma separated comments:</p>
-                <input type="text" name="player-choice">
-                <br/><br/>
-                <input type="submit" />
+            <h1>Which country do you go to college in?</h1>
+            <h2>Vote</h2>
+            <form action="/college-countries" method="POST">
+                <select name="country">
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="India">India</option>
+                    <option value="Germany">Germany</option>
+                    <option value="UAE">UAE</option>
+                    <option value="Australia">Australia</option>
+                </select>
+                <button>Submit</button>
             </form>
             <br>
-            <ul id="dynamic-list"></ul>
         </div>
         <div id="columns" style="float:right;">
             <div id="chart-container"></div>

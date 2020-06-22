@@ -18,22 +18,28 @@
 google.charts.load('current', {packages: ['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
-      // Define the chart to be drawn.
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Element');
-      data.addColumn('number', 'Percentage');
-      data.addRows([
-        ['Nitrogen', 0.78],
-        ['Oxygen', 0.21],
-        ['Other', 0.01]
-      ]);
+  fetch('/college-countries').then(response => response.json())
+  .then((countStudents) => {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Country');
+    data.addColumn('number', 'Number of Students');
+    Object.keys(countStudents).forEach((country) => {
+      data.addRow([country, countStudents[country]]);
+    });
 
-      // Instantiate and draw the chart.
-      var chart = new google.visualization.PieChart(
-          document.getElementById('chart-container'));
-      chart.draw(data, null);
+    const options = {
+        'title': 'College Countries',
+        'width':630,
+        'height':800,
+        'pieHole': 0.4,
+    };
+
+    const chart = new google.visualization.PieChart(
+        document.getElementById('chart-container'));
+    chart.draw(data, options);
+  });
 }
-function genAlbums() {
+/*function genAlbums() {
     fetch('/data').then(response => response.json()).then((albumNames) => {
     var ul = document.getElementById("dynamic-list");
     //ul.innerHTML = "";
@@ -43,5 +49,5 @@ function genAlbums() {
         ul.appendChild(listItem);
     }
     });
-}
+}*/
 

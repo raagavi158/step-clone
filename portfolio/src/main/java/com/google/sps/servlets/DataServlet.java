@@ -34,12 +34,12 @@ public class DataServlet extends HttpServlet {
     private List<String> quotes = new ArrayList<>();
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Query query = new Query("Comments").addSort("albumNames", SortDirection.DESCENDING);
+        Query query = new Query("User").addSort("Comments", SortDirection.DESCENDING);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
         String albumNames = "";
         for (Entity entity : results.asIterable()) {
-            albumNames = (String) entity.getProperty("albumNames");
+            albumNames = (String) entity.getProperty("Comments");
         }
         response.setContentType("application/json;");
         response.getWriter().println(albumNames);
@@ -51,21 +51,21 @@ public class DataServlet extends HttpServlet {
         // Get the input from the form.
         String text = request.getParameter("player-choice");
         String[] words = text.split("\\s*,\\s*");
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < words.length; i++) {
             quotes.add(words[i]);
         }
-        Entity entity = new Entity("Comments");
-        entity.setProperty("albumNames", convertToJsonUsingGson());
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(entity);
-        // Redirect back to the HTML page.
-        response.sendRedirect("/music.html");
+    Entity taskEntity = new Entity("User");
+    taskEntity.setProperty("Comments", convertToJsonUsingGson());
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
+    // Redirect back to the HTML page.
+    response.sendRedirect("/music.html");
     }
 
     private String convertToJsonUsingGson() {
         String json = "[";
         int i;
-        for( i = 0; i < quotes.size()-1; i++) {
+        for( i = 0;  i < quotes.size()-1; i++) {
             json += "\"" + quotes.get(i) +"\",";
         }
         json += "\"" + quotes.get(i) +"\"";

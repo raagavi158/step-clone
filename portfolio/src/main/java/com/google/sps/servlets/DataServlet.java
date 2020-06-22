@@ -32,22 +32,14 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
     private List<String> quotes = new ArrayList<>();
-    /*@Override
-    public void init() {
-        quotes = 
-        quotes.add("2014 Forest Hill Drive - J.Cole");
-        quotes.add("ASTROWORLD - Travis Scott");
-        quotes.add("Blonde - Frank Ocean");
-        quotes.add("Currents - Tame Impala");
-    }*/
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Query query = new Query("Task").addSort("albumNames", SortDirection.DESCENDING);
+        Query query = new Query("User").addSort("Comments", SortDirection.DESCENDING);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
         String albumNames = "";
         for (Entity entity : results.asIterable()) {
-            albumNames = (String) entity.getProperty("albumNames");
+            albumNames = (String) entity.getProperty("Comments");
         }
         response.setContentType("application/json;");
         response.getWriter().println(albumNames);
@@ -59,11 +51,11 @@ public class DataServlet extends HttpServlet {
         // Get the input from the form.
         String text = request.getParameter("player-choice");
         String[] words = text.split("\\s*,\\s*");
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < words.length; i++) {
             quotes.add(words[i]);
         }
-    Entity taskEntity = new Entity("Task");
-    taskEntity.setProperty("albumNames", convertToJsonUsingGson());
+    Entity taskEntity = new Entity("User");
+    taskEntity.setProperty("Comments", convertToJsonUsingGson());
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
     // Redirect back to the HTML page.
@@ -73,7 +65,7 @@ public class DataServlet extends HttpServlet {
     private String convertToJsonUsingGson() {
         String json = "[";
         int i;
-        for( i = 0; i < 13 && i < quotes.size()-1; i++) {
+        for( i = 0;  i < quotes.size()-1; i++) {
             json += "\"" + quotes.get(i) +"\",";
         }
         json += "\"" + quotes.get(i) +"\"";

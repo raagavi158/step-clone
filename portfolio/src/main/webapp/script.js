@@ -15,15 +15,53 @@
 /**
  * Adds a random greeting to the page.
  */
-function genAlbums() {
-    fetch('/data').then(response => response.json()).then((albumNames) => {
+function genData() {
+    fetch('/data').then(response => response.json()).then((comm) => {
     var ul = document.getElementById("dynamic-list");
-    //ul.innerHTML = "";
-    for(var i = 0; i < albumNames.length; i++) {
-        var listItem = document.createElement('li');
-        listItem.textContent = albumNames[i];
-        ul.appendChild(listItem);
-    }
+    comm.forEach((comment) => {
+        ul.appendChild(createElement(comment));
+        })
+    });
+}
+
+function createElement(comment) {
+  const element = document.createElement('li');
+  element.className = 'comment';
+
+  const text = document.createElement('span');
+  text.innerText = comment.email + ": " + comment.comm ;
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteTask(comment);
+    element.remove();
+  });
+
+  element.appendChild(text);
+  element.appendChild(deleteButtonElement);
+  return element;
+}
+
+function deleteTask(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-task', {method: 'POST', body: params});
+}
+
+function loginCheck() {
+    fetch('/login').then(response => response.json()).then((loginStatus) => {
+        var body = document.getElementById("main-body");
+        if((loginStatus.isLoggedIn).localeCompare("true")) { 
+            document.getElementById("comments-form").style.visibility = "visible";
+            document.getElementById("dynamic-list").style.visibility = "visible";
+            body.innerHTML = "Logout <a href= \"" + loginStatus.link + "\" >here</a>"
+        }   
+        else {
+            document.getElementById("comments-form").style.visibility = "hidden";
+            document.getElementById("dynamic-list").style.visibility = "hidden";
+            body.innerHTML = "Login <a href= \"" + loginStatus.link + "\" >here</a>"
+        }   
     });
 }
 

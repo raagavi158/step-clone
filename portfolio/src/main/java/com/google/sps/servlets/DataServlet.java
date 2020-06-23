@@ -13,9 +13,13 @@
 // limitations under the License.
 
 package com.google.sps.servlets;
-
+import com.google.sps.data.LoginMessage;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,47 +35,38 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private List<String> quotes = new ArrayList<>();
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Query query = new Query("Comments").addSort("albumNames", SortDirection.DESCENDING);
+        Query query = new Query("Comment").addSort("time", SortDirection.ASCENDING);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
-        String albumNames = "";
+        List<Comment> quotes = new ArrayList<>();
         for (Entity entity : results.asIterable()) {
-            albumNames = (String) entity.getProperty("albumNames");
+            long id = entity.getKey().getId();
+            String com = (String) entity.getProperty("comment");
+            String email = (String) entity.getProperty("user");
+            long timestamp = (long) entity.getProperty("time");
+            Comment comm = new Comment(id, email, com, timestamp);
+            quotes.add(comm);
         }
-        response.setContentType("application/json;");
-        response.getWriter().println(albumNames);
+          Gson gson = new Gson();
+          response.setContentType("application/json;");
+          response.getWriter().println(gson.toJson(quotes));
     }
+
      @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // If the user sends another POST request after the game is over, then start a new game.
-
-        // Get the input from the form.
+        UserService userService = UserServiceFactory.getUserService();
+        String userEmail = userService.getCurrentUser().getEmail();
         String text = request.getParameter("player-choice");
-        String[] words = text.split("\\s*,\\s*");
-        for(int i = 0; i < 4; i++) {
-            quotes.add(words[i]);
-        }
-        Entity entity = new Entity("Comments");
-        entity.setProperty("albumNames", convertToJsonUsingGson());
+        Entity entity = new Entity("Comment");
+        entity.setProperty("comment", text);
+        entity.setProperty("user", userEmail);
+        entity.setProperty("time", System.currentTimeMillis());
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(entity);
-        // Redirect back to the HTML page.
-        response.sendRedirect("/music.html");
+        response.sendRedirect("/index.html");
     }
 
-    private String convertToJsonUsingGson() {
-        String json = "[";
-        int i;
-        for( i = 0; i < quotes.size()-1; i++) {
-            json += "\"" + quotes.get(i) +"\",";
-        }
-        json += "\"" + quotes.get(i) +"\"";
-        json += "]";
-        System.out.println(json);
-        return json;
-        
-    }
 }

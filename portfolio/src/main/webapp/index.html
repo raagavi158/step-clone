@@ -2,24 +2,28 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Discover</title>
+    <title>Discover Music</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body class="aligncenter" style="background-image: url('images/albumart.jpg'); padding: 50px">
-    <div id="content" style="width: 1300px;">
-      <h1 style="text-align: center" > DISCOVER</h1>
-      <br>
-      <h2 id="main_body" style="background-color:#FFA69E; text-align: center;">
-          Find random album recommendations to listen to!
-          <br>
-          <br>
-          <button onclick="location.href='gallery.html'" type="button">GALLERY</button>
-          <button onclick="location.href='music.html'" type="button">GO</button>
-      </h2>
+    <body onload="loginCheck(); genData();">
+    <body style="background-color:#3F4045;"> 
+    <div id="content">
+        <div class="columns" style="float:left;" >
+            <h1>COMMENTS</h1>
 
-      
-      <div id="greeting-container"></div>
+            <h2 id="main-body"></h2>
+
+            <form action="/data" method="POST" id="comments-form" style="visibility:hidden;">
+                <h2>Comments:</h2>
+                <input type="text" name="player-choice" >
+                <br/><br/>
+                <input type="submit" />    
+            </form>
+        </div>
+        <div class="columns" style="float:right; visibility:hidden;">
+            <ul id="dynamic-list"></ul>
+        </div>
     </div>
   </body>
 </html>

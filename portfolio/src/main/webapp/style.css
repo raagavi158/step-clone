@@ -5,18 +5,17 @@
 button {
     background-color: #ADD8E6; 
     border: none;
+    padding: 10px
     border-radius: 10px;
     color:  #3F4045;
-    padding: 15px 20px;
     text-align: center;
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    font-size: 10px;
     }
 
 ul {
     font-family:verdana;
-    font-size: 23px;
+    font-size: 16px;
     text-align: left;
     list-style-position: inside;
     color: #3F4045;
@@ -24,12 +23,13 @@ ul {
     border: 20px #E4B1AB;
     border-radius: 10px;
     padding: 20px;
-    width: 400px;
+    width: 600px;
     margin-left: auto;
     margin-right: auto;
+    
 }
 
-#columns {
+.columns {
     width: 50%;
     text-align: center;
 }
@@ -50,7 +50,7 @@ h1 {
 h2 {
     font-family:verdana; 
     font-size:30px;
-    color:#3F4045;
+    color:#ADD8E6
 }
 #main_body {
   border: 40px #fa8072;
@@ -123,7 +123,20 @@ img {
   border-style: solid;
   border-color: #E4B1AB transparent transparent transparent;
 }
+#dynamic-list {
+  list-style-type: none;
+}
 
+.comment {
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  width: 500px;
+}
+
+.comment span {
+  flex-grow: 1;
+}
 
 .tooltip:hover .tooltiptext {
   visibility: visible;

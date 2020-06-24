@@ -15,6 +15,8 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +25,26 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+    private List<String> quotes;
+    @Override
+    public void init() {
+        quotes = new ArrayList<>();
+        quotes.add("2014 Forest Hill Drive - J.Cole");
+        quotes.add("ASTROWORLD - Travis Scott");
+        quotes.add("Blonde - Frank Ocean");
+        quotes.add("Currents - Tame Impala");
+    }
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String json = convertToJsonUsingGson();
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
+    }
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Raagavi!</h1>");
-  }
+    private String convertToJsonUsingGson() {
+        String json = "[";
+        json += "\"" + quotes.get(0) +"\", \"" + quotes.get(1) + "\", \"" + quotes.get(2) + "\", \"" + quotes.get(3) +"\"";
+        json += "]";
+        return json;
+    }
 }

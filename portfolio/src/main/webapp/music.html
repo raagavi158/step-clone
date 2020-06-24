@@ -6,13 +6,20 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
+  <body onload="genAlbums()">
   <body style="background-color:#3F4045;"> 
     <div id="content;">
         <div id="columns" style="float:left; ">
             <h1>ALBUMS</h1>
             <br>
-            <button onclick="genAlbums()">Find Music</button>
+            <!--<button onclick="genAlbums()">Find Music</button>-->
             <br>
+            <form action="/data" method="POST">
+                <p>Num albums:</p>
+                <input type="text" name="player-choice">
+                <br/><br/>
+                <input type="submit" />
+            </form>
             <br>
             <ul id="dynamic-list"></ul>
         </div>

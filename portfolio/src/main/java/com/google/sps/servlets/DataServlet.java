@@ -21,24 +21,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
     private List<String> quotes = new ArrayList<>();
-    /*@Override
-    public void init() {
-        quotes = 
-        quotes.add("2014 Forest Hill Drive - J.Cole");
-        quotes.add("ASTROWORLD - Travis Scott");
-        quotes.add("Blonde - Frank Ocean");
-        quotes.add("Currents - Tame Impala");
-    }*/
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json = convertToJsonUsingGson();
+        Query query = new Query("User").addSort("Comments", SortDirection.DESCENDING);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(query);
+        String albumNames = "";
+        for (Entity entity : results.asIterable()) {
+            albumNames = (String) entity.getProperty("Comments");
+        }
         response.setContentType("application/json;");
-        response.getWriter().println(json);
+        response.getWriter().println(albumNames);
     }
      @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,16 +51,24 @@ public class DataServlet extends HttpServlet {
         // Get the input from the form.
         String text = request.getParameter("player-choice");
         String[] words = text.split("\\s*,\\s*");
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < words.length; i++) {
             quotes.add(words[i]);
         }
+    Entity taskEntity = new Entity("User");
+    taskEntity.setProperty("Comments", convertToJsonUsingGson());
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
     // Redirect back to the HTML page.
     response.sendRedirect("/music.html");
     }
 
     private String convertToJsonUsingGson() {
         String json = "[";
-        json += "\"" + quotes.get(0) +"\", \"" + quotes.get(1) + "\", \"" + quotes.get(2) + "\", \"" + quotes.get(3) +"\"";
+        int i;
+        for( i = 0;  i < quotes.size()-1; i++) {
+            json += "\"" + quotes.get(i) +"\",";
+        }
+        json += "\"" + quotes.get(i) +"\"";
         json += "]";
         System.out.println(json);
         return json;

@@ -15,14 +15,59 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+function genAlbums() {
+    var past = new Set();
+    
+    const albumNames = ['2014 Forest Hill Drive - J.Cole', 
+                        'ASTROWORLD - Travis Scott', 
+                        'Blonde - Frank Ocean', 
+                        'Currents - Tame Impala', 
+                        'Dont Forget About Me - Dominic Fike', 
+                        'GINGER - BROCKHAMPTON', 
+                        'Lyrics To Go Vol.1 - Kota the Friend', 
+                        'Mind the Moon - Milky Chance', 
+                        'Oasis - Bad Bunny', 
+                        'Section.80 - Kendrick Lamar', 
+                        'The Divine Feminine - Mac Miller', 
+                        'The Click - AJR', 'YHLQMDLG - Bad Bunny', 
+                        'Ego Death - The Internet', 
+                        'The Getaway - Red Hot Chilli Peppers', 
+                        'Ved-Ritviz'];
+    const albumArt = ['2014FHD.png', 
+                    'ASTROWORLD.png', 
+                    'Blonde.png', 
+                    'Currents.png', 
+                    'DFAM.png', 
+                    'GINGER.png', 
+                    'LTG1.png', 
+                    'MTM.png', 
+                    'Oasis.png', 
+                    'Section80.png', 
+                    'TDF.png', 
+                    'TheClick.png', 
+                    'YHLQMDLG.png', 
+                    'ED.png', 
+                    'TG.png', 
+                    'Ved.png']
+    var ul = document.getElementById("dynamic-list");
+    ul.innerHTML = "";
+    var numContainers = 5;
+    for (var i = 1; i < numContainers; i++) {
+        var imageIndex; 
+        do {
+            imageIndex = Math.floor(Math.random() * albumArt.length);
+        }
+        while (past.has(imageIndex));
+        past.add(imageIndex);
+        const imgUrl = '/images/' + albumArt[imageIndex];
+        const imgElement = document.createElement('img');
+        imgElement.src = imgUrl;
+        var imageContainer = document.getElementById('random-image-container-' + i);
+        imageContainer.innerHTML = '';
+        imageContainer.appendChild(imgElement);
+        var listItem = document.createElement('li');
+        listItem.textContent = albumNames[imageIndex];
+        ul.appendChild(listItem);
+    }
 }
+
